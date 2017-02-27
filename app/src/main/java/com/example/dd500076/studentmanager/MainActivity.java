@@ -1,5 +1,8 @@
 package com.example.dd500076.studentmanager;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -9,13 +12,14 @@ import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.AdapterView;
+import android.widget.ListView;
 
-import org.json.JSONArray;
-
-import java.net.URI;
-import java.net.URISyntaxException;
+import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
+
+    private static final String TAG = "MainActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,20 +36,46 @@ public class MainActivity extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
+        ArrayList<User> arrayOfUsers = new ArrayList<User>();
 
-        APIManager api = new APIManager();
-        try {
-            api.request(new URI("http://infort.gautero.fr/listEtu.php"), new RequestCallback() {
-                @Override
-                public void onResult(JSONArray object) {
-                    Log.d("quelquechoseici", "onResult: " + object);
-                }
-            });
-        } catch (URISyntaxException e) {
-            e.printStackTrace();
-        }
+        User user1 = new User("500098", "nicolas", "romain", "R&T", 2016);
+        User user2 = new User("500064", "villena", "guillaume", "R&T", 2016);
+        User user3 = new User("500076", "delaporte", "dylan", "R&T", 2016);
+        arrayOfUsers.add(user1);
+        arrayOfUsers.add(user2);
+        arrayOfUsers.add(user3);
+        UsersAdapter adapter = new UsersAdapter(this, arrayOfUsers);
+        ListView listView = (ListView) findViewById(R.id.listviewMain);
+        listView.setAdapter(adapter);
 
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Log.d(TAG, "onItemClick: test");
 
+                User user = (User) view.getTag();
+
+                Log.d(TAG, "onItemClick: " + user.name);
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+                builder.setTitle(R.string.properties_student_text)
+                        .setItems(R.array.properties_student, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                Log.d(TAG, "onClick : " + which);
+                                if (which == 0){
+                                    //modifier
+                                }
+                                else {
+                                    //supprimer
+                                }
+
+                            }
+                        });
+
+                AlertDialog alertDialog = builder.create();
+                alertDialog.show();
+            }
+        });
     }
 
     @Override
@@ -69,4 +99,5 @@ public class MainActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
 }
