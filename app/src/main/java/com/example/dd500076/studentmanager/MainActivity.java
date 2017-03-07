@@ -17,12 +17,12 @@ import android.widget.ListView;
 
 import java.util.ArrayList;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends SuperActivity {
 
     private static final String TAG = "MainActivity";
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -76,6 +76,8 @@ public class MainActivity extends AppCompatActivity {
                 alertDialog.show();
             }
         });
+
+        APIManager.getInstance(this).connect("admin", "secret");
     }
 
     @Override
@@ -100,4 +102,8 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    public void onConnect(boolean connected, String token) {
+        Log.d(TAG, "onConnect: " + connected);
+    }
 }
