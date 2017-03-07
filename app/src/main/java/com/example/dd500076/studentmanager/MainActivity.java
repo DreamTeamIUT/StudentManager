@@ -88,6 +88,12 @@ public class MainActivity extends SuperActivity {
                                             APIManager.getInstance(MainActivity.this).delStudent(user.idEtu);
                                         }
                                     });
+                                    alert.setNegativeButton("No", new DialogInterface.OnClickListener(){
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            dialog.cancel();
+                                        }
+                                    });
                                     alert.show();
                                 }
 
