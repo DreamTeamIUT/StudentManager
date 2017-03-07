@@ -179,16 +179,26 @@ public class APIManager {
             Log.d(TAG, "onReceive: " + intent.getStringExtra("requestName") + " " + intent.getStringExtra("message"));
             try {
                 JSONArray jsonArray = new JSONArray(intent.getStringExtra("message"));
-                JSONObject jsonObject = (JSONObject)jsonArray.get(0);
 
-                if (intent.getStringExtra("requestName").equals(RequestName.CONNECT)){
+                if (intent.getStringExtra("requestName").equals(RequestName.CONNECT)) {
+                    JSONObject jsonObject = (JSONObject)jsonArray.get(0);
+
                     Boolean connected = !jsonObject.getString("jeton").equals("");
 
                     APIManager.this.token = jsonObject.getString("jeton");
 
                     APIManager.this.requestMessageInterface.onConnect(connected, (connected ? jsonObject.getString("jeton") : null));
-                }else if (intent.getStringExtra("requestName").equals(RequestName.LISTE)){
+                }else if (intent.getStringExtra("requestName").equals(RequestName.LISTE)) {
+                    //APIManager.this.requestMessageInterface.onStudentList();
 
+                    ArrayList<User> users = new ArrayList<>();
+
+                    for (int i = 0; i < jsonArray.length(); i++) {
+                        JSONObject jsonObject = (JSONObject) jsonArray.get(i);
+                        users.add(new User(jsonObject.getString("idEtu"), jsonObject.getString("nom"), jsonObject.getString("prenom"), jsonObject.getString("formation"), jsonObject.getInt("annee")));
+                    }
+
+                    APIManager.this.requestMessageInterface.onStudentList(users);
                 }
             } catch (JSONException e) {
                 e.printStackTrace();

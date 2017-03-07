@@ -21,6 +21,8 @@ public class MainActivity extends SuperActivity {
 
     private static final String TAG = "MainActivity";
 
+    private ListView listView;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,6 +38,8 @@ public class MainActivity extends SuperActivity {
                         .setAction("Action", null).show();
             }
         });
+
+        /*
         ArrayList<User> arrayOfUsers = new ArrayList<User>();
 
         User user1 = new User("500098", "nicolas", "romain", "R&T", 2016);
@@ -48,6 +52,9 @@ public class MainActivity extends SuperActivity {
         UsersAdapter adapter = new UsersAdapter(this, arrayOfUsers);
         ListView listView = (ListView) findViewById(R.id.listviewMain);
         listView.setAdapter(adapter);
+        */
+
+        listView = (ListView) findViewById(R.id.listviewMain);
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -79,6 +86,7 @@ public class MainActivity extends SuperActivity {
         });
 
         APIManager.getInstance(this).connect("admin", "secret");
+        APIManager.getInstance(this).getStudentList();
     }
 
     @Override
@@ -106,5 +114,12 @@ public class MainActivity extends SuperActivity {
     @Override
     public void onConnect(boolean connected, String token) {
         Log.d(TAG, "onConnect: " + connected);
+    }
+
+    @Override
+    public void onStudentList(ArrayList<User> users) {
+        UsersAdapter adapter = new UsersAdapter(this, users);
+        ListView listView = (ListView) findViewById(R.id.listviewMain);
+        listView.setAdapter(adapter);
     }
 }
