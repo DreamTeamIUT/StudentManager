@@ -3,6 +3,7 @@ package com.example.dd500076.studentmanager;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -21,6 +22,8 @@ public class MainActivity extends SuperActivity {
 
     private static final String TAG = "MainActivity";
 
+    private static final int REQUEST_ADD = 665;
+
     private ListView listView;
 
     @Override
@@ -34,8 +37,8 @@ public class MainActivity extends SuperActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                Intent i = new Intent(MainActivity.this, AddUser.class);
+                startActivityForResult(i, REQUEST_ADD);
             }
         });
 
@@ -85,7 +88,6 @@ public class MainActivity extends SuperActivity {
             }
         });
 
-        APIManager.getInstance(this).connect("admin", "secret");
         APIManager.getInstance(this).getStudentList();
     }
 
@@ -109,6 +111,12 @@ public class MainActivity extends SuperActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == REQUEST_ADD && resultCode == RESULT_OK)
+            APIManager.getInstance(this).getStudentList();
     }
 
     @Override
