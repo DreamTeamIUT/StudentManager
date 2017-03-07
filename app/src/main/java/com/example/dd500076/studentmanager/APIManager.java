@@ -82,10 +82,14 @@ public class APIManager {
     }
 
     public void addStudent(String name, String surname, String formation, String year) {
-        getToken();
+        String jeton = getToken();
+        String url = "http://infort.gautero.fr/add.php?jeton=" + jeton + "&nom=" + name +
+                "&prenom=" + surname + "&formation=" + formation + "&annee=" + year;
+        request(url, RequestName.ADD);
     }
-    public void delStudent(int idUser) {
-        getToken();
+    public void delStudent(String idUser) {
+        String jeton = getToken();
+        String url = "http://infort.gautero.fr/supp.php?jeton=" + jeton + "id=" + idUser;
     }
 
     private void request(final String urlText, final String requestName) {
@@ -151,7 +155,9 @@ public class APIManager {
 
                     APIManager.this.requestMessageInterface.onStudentList(users);
                 }else if (intent.getStringExtra("requestName").equals(RequestName.ADD)){
-
+                    APIManager.this.requestMessageInterface.onAdd(true);
+                }else if (intent.getStringExtra("requestName").equals(RequestName.DEL)){
+                    APIManager.this.requestMessageInterface.onDelete(true);
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -168,5 +174,6 @@ public class APIManager {
         public static final String CONNECT = "CONNECT";
         public static final String LISTE = "LISTE";
         public static final String ADD = "ADD";
+        public static final String DEL = "DEL";
     }
 }
