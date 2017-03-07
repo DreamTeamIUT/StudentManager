@@ -3,43 +3,72 @@
 
     android:layout_width="match_parent"
 
-    android:layout_height="match_parent" >
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
 
-    <TextView
-        android:text="idEtu"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/tvIdEtu" />
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/tvName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Name"
-        android:layout_marginLeft="20dp" />
+        <TextView
+            android:id="@+id/tvSurname"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Pierre"
+            android:layout_above="@+id/tvStudies"
+            android:layout_alignStart="@+id/tvIdEtu"
+            android:layout_weight="0.76"
+            android:textStyle="normal|bold"
+            android:textSize="26sp"
+            android:gravity="center_vertical"
+            android:layout_margin="2dp"
+            android:paddingLeft="15dp" />
 
-    <TextView
-        android:id="@+id/tvSurname"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="surname"
-        android:layout_marginLeft="20dp" />
+        <TextView
+            android:id="@+id/tvName"
+            android:layout_width="wrap_content"
+            android:text="Boulanger"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentStart="true"
+            android:layout_weight="21.88"
+            android:gravity="center_vertical"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:textStyle="normal|bold"
+            android:textSize="18sp" />
 
-    <TextView
-        android:text="studies"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/tvStudies"
-        android:layout_weight="1"
-        android:layout_marginLeft="20dp" />
+    </LinearLayout>
 
-    <TextView
-        android:text="tvYear"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/tvYear"
-        android:layout_weight="1"
-        android:layout_marginLeft="20dp"/>
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="0.76">
+
+        <TextView
+            android:text="IUT"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/tvStudies"
+            android:layout_weight="0.34"
+            android:layout_above="@+id/tvYear"
+            android:layout_toEndOf="@+id/tvSurname"
+            android:paddingLeft="15dp" />
+
+        <TextView
+            android:text="2016"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/tvYear"
+            android:layout_weight="0.18"
+            android:layout_alignBaseline="@+id/tvIdEtu"
+            android:layout_alignBottom="@+id/tvIdEtu"
+            android:layout_toEndOf="@+id/tvStudies"
+            android:gravity="right"
+            android:paddingRight="15dp" />
+
+    </LinearLayout>
 
 
 </LinearLayout>
