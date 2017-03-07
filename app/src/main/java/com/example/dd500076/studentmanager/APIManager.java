@@ -99,7 +99,6 @@ public class APIManager {
                 try {
                     URL url = new URL(urlText);
                     InputStream in = url.openStream();
-                    InputStreamReader reader = new InputStreamReader(in);
                     Intent intent = new Intent("message-request-event");
                     intent.putExtra("requestName", requestName);
                     intent.putExtra("message", readStream(in));
@@ -154,7 +153,7 @@ public class APIManager {
                     }
 
                     APIManager.this.requestMessageInterface.onStudentList(users);
-                }else if (intent.getStringExtra("requestName").equals(RequestName.ADD)){
+                }else if (intent.getStringExtra("requestName").equals(RequestName.ADD)) {
                     APIManager.this.requestMessageInterface.onAdd(true);
                 }else if (intent.getStringExtra("requestName").equals(RequestName.DEL)){
                     APIManager.this.requestMessageInterface.onDelete(true);
