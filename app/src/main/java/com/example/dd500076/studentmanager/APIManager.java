@@ -81,6 +81,13 @@ public class APIManager {
         request(url, RequestName.LISTE);
     }
 
+    public void addStudent(String name, String surname, String formation, String year) {
+        getToken();
+    }
+    public void delStudent(int idUser) {
+        getToken();
+    }
+
     private void request(final String urlText, final String requestName) {
         new Thread(new Runnable() {
             @Override
@@ -99,62 +106,6 @@ public class APIManager {
                 }
             }
         }).start();
-
-        /*
-       new Thread(new Runnable() {
-            @Override
-            public void run() {
-                HttpURLConnection httpRequest = null;
-                InputStream in = null;
-                Log.d("REQUEST", "request: onEnter");
-                try {
-                    httpRequest = (HttpURLConnection) url.;
-                    in = new BufferedInputStream(httpRequest.getInputStream());
-                } catch (IOException e) {
-                    e.printStackTrace();
-                } finally {
-                    httpRequest.disconnect();
-                }
-                try {
-                    callback.onResult(new JSONArray(new JSONTokener(readStream(in))));
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-
-
-                try {
-                    URI uri = new URI(url);
-                    callback.onResult(new JSONArray(new JSONTokener(readStream(uri.toURL().openStream()))));
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                } catch (URISyntaxException e) {
-                    e.printStackTrace();
-                }
-
-            }
-        }).start();
-
-
-
-        /*RequestFuture<JSONObject> future = RequestFuture.newFuture();
-        JsonObjectRequest request = null;
-
-            request = new JsonObjectRequest("https://jsonplaceholder.typicode.com/posts/1", new JSONObject(), future, future);
-
-        ArrayList<JsonObjectRequest> requestQueue = new ArrayList<>();
-        requestQueue.add(request);
-
-       /* try {
-            JSONObject response = future.get(); // this will block
-        } catch (InterruptedException e) {
-            // exception handling
-        } catch (ExecutionException e) {
-            // exception handling
-        }*/
-
-        //return null;
     }
 
     private String readStream(InputStream is) {
@@ -199,6 +150,8 @@ public class APIManager {
                     }
 
                     APIManager.this.requestMessageInterface.onStudentList(users);
+                }else if (intent.getStringExtra("requestName").equals(RequestName.ADD)){
+
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -214,5 +167,6 @@ public class APIManager {
     public class RequestName {
         public static final String CONNECT = "CONNECT";
         public static final String LISTE = "LISTE";
+        public static final String ADD = "ADD";
     }
 }
