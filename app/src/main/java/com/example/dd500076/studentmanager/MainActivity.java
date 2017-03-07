@@ -41,6 +41,7 @@ public class MainActivity extends SuperActivity {
         User user1 = new User("500098", "nicolas", "romain", "R&T", 2016);
         User user2 = new User("500064", "villena", "guillaume", "R&T", 2016);
         User user3 = new User("500076", "delaporte", "dylan", "R&T", 2016);
+        User user4 = new User("503084", "fedhaoui", "thibault", "R&T", 2016);
         arrayOfUsers.add(user1);
         arrayOfUsers.add(user2);
         arrayOfUsers.add(user3);

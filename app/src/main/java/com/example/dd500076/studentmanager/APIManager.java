@@ -42,7 +42,7 @@ import static android.content.ContentValues.TAG;
 public class APIManager {
     private static APIManager apiManager;
 
-    public String valueToken;
+    public String token;
 
     private Context context;
     private RequestMessageInterface requestMessageInterface;
@@ -67,6 +67,18 @@ public class APIManager {
     public void connect(String username, String password) {
         String url = "http://infort.gautero.fr/connect.php?login=" + username + "&mdp=" + password;
         request(url, RequestName.CONNECT);
+    }
+
+    public Boolean isConnected() {
+        return this.token != null && !this.token.equals("");
+    }
+
+    public String getToken() {
+        return this.token;
+    }
+    public void getStudentList() {
+        String url = "http://infort.gautero.fr/listEtu.php";
+        request(url, RequestName.LISTE);
     }
 
     private void request(final String urlText, final String requestName) {
@@ -172,7 +184,11 @@ public class APIManager {
                 if (intent.getStringExtra("requestName").equals(RequestName.CONNECT)){
                     Boolean connected = !jsonObject.getString("jeton").equals("");
 
+                    APIManager.this.token = jsonObject.getString("jeton");
+
                     APIManager.this.requestMessageInterface.onConnect(connected, (connected ? jsonObject.getString("jeton") : null));
+                }else if (intent.getStringExtra("requestName").equals(RequestName.LISTE)){
+
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -187,5 +203,6 @@ public class APIManager {
 
     public class RequestName {
         public static final String CONNECT = "CONNECT";
+        public static final String LISTE = "LISTE";
     }
 }
