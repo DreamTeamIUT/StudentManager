@@ -41,16 +41,12 @@ public class UsersAdapter extends ArrayAdapter<User> {
         TextView tvName = (TextView) convertView.findViewById(R.id.tvName);
 
         TextView tvSurname = (TextView) convertView.findViewById(R.id.tvSurname);
-
-        TextView tvIdEtu = (TextView) convertView.findViewById(R.id.tvIdEtu);
         TextView tvYear = (TextView) convertView.findViewById(R.id.tvYear);
         TextView tvStudies = (TextView) convertView.findViewById(R.id.tvStudies);
 
         tvName.setText(user.name);
 
         tvSurname.setText(user.surname);
-
-        tvIdEtu.setText(user.idEtu);
 
         tvYear.setText(String.valueOf(user.year));
 
