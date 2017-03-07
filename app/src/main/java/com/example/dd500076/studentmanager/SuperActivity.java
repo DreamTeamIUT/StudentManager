@@ -29,12 +29,12 @@ public class SuperActivity extends AppCompatActivity implements RequestMessageIn
     }
 
     @Override
-    public void onDelete(boolean deleted) {
+    public void onDeleteStudent(boolean deleted) {
 
     }
 
     @Override
-    public void onAdd(boolean added) {
+    public void onAddStudent(boolean added) {
 
     }
 }

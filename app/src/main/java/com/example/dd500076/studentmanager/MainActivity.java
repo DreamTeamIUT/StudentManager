@@ -64,7 +64,7 @@ public class MainActivity extends SuperActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Log.d(TAG, "onItemClick: test");
 
-                User user = (User) view.getTag();
+                final User user = (User) view.getTag();
 
                 Log.d(TAG, "onItemClick: " + user.name);
 
@@ -78,6 +78,17 @@ public class MainActivity extends SuperActivity {
                                 }
                                 else {
                                     //supprimer
+                                    AlertDialog.Builder alert = new AlertDialog.Builder(MainActivity.this);
+                                    alert.setTitle("Warning");
+                                    alert.setMessage("Would you like to delete " + user.name);
+                                    alert.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            Log.d(TAG, "onClick: del stud " + user.idEtu);
+                                            APIManager.getInstance(MainActivity.this).delStudent(user.idEtu);
+                                        }
+                                    });
+                                    alert.show();
                                 }
 
                             }
@@ -122,6 +133,12 @@ public class MainActivity extends SuperActivity {
     @Override
     public void onConnect(boolean connected, String token) {
         Log.d(TAG, "onConnect: " + connected);
+    }
+
+    @Override
+    public void onDeleteStudent(boolean deleted) {
+        Log.d(TAG, "onDeleteStudent: azertyrse");
+        APIManager.getInstance(this).getStudentList();
     }
 
     @Override

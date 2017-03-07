@@ -9,6 +9,6 @@ import java.util.ArrayList;
 public interface RequestMessageInterface {
     void onConnect(boolean connected, String token);
     void onStudentList(ArrayList<User> users);
-    void onDelete(boolean deleted);
-    void onAdd(boolean added);
+    void onDeleteStudent(boolean deleted);
+    void onAddStudent(boolean added);
 }

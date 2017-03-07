@@ -13,6 +13,12 @@ public class AddUser extends SuperActivity {
 
     private static final int REQUEST_CODE = 15;
 
+    /*
+    public AddUser(){
+        super();
+    }
+    */
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,12 +50,8 @@ public class AddUser extends SuperActivity {
             return;
         }
 
-        User user = new User(null, nom, prenom ,formation , Integer.parseInt(annee));
         if (APIManager.getInstance(this).isConnected())
-        {
-            //APIManager.getInstance(this).add(user);
-
-        }
+            APIManager.getInstance(this).addStudent(nom, prenom , formation, annee);
         else{
             Intent intent = new Intent(this, LoginActivity.class);
             startActivityForResult(intent, REQUEST_CODE);
@@ -58,7 +60,8 @@ public class AddUser extends SuperActivity {
     }
 
     @Override
-    public void onAdd(boolean added) {
+    public void onAddStudent(boolean added) {
+        Log.d("fghjkjddfgh", "onAddStudent: gggggg");
         if (added)
         {
             Log.d("TAG", "Création Réussie");
