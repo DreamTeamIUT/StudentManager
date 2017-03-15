@@ -187,7 +187,8 @@ public class MainActivity extends SuperActivity implements SearchView.OnQueryTex
                 }
             });
         }
-        updateList();
+
+        this.listView.setAdapter(new UsersAdapter(this, this.users));
 
         return super.onOptionsItemSelected(item);
     }
