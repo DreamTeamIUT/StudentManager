@@ -136,7 +136,7 @@ public class MainActivity extends SuperActivity {
             Collections.sort(users, new Comparator<User>() {
                 @Override
                 public int compare(User o1, User o2) {
-                    return o1.name.compareTo(o2.name);
+                    return o1.name.compareToIgnoreCase(o2.name);
                 }
             });
         }
@@ -145,7 +145,7 @@ public class MainActivity extends SuperActivity {
             Collections.sort(users, new Comparator<User>() {
                 @Override
                 public int compare(User o1, User o2) {
-                    return o2.name.compareTo(o1.name);
+                    return o2.name.compareToIgnoreCase(o1.name);
                 }
             });
         }
@@ -163,7 +163,7 @@ public class MainActivity extends SuperActivity {
             Collections.sort(users, new Comparator<User>() {
                 @Override
                 public int compare(User o1, User o2) {
-                    return o1.studies.compareTo(o2.studies);
+                    return o1.studies.compareToIgnoreCase(o2.studies);
                 }
             });
         }
