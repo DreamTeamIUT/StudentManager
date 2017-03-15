@@ -13,11 +13,6 @@ public class AddUser extends SuperActivity {
 
     private static final int REQUEST_CODE = 15;
 
-    /*
-    public AddUser(){
-        super();
-    }
-    */
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -31,6 +26,8 @@ public class AddUser extends SuperActivity {
                 addUser(view);
             }
         });
+
+        setTitle("Add a user");
     }
 
     public void addUser(View v){
