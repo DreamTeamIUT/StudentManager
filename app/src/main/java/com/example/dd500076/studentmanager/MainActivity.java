@@ -15,6 +15,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.SubMenu;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -23,6 +24,8 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 public class MainActivity extends SuperActivity implements SearchView.OnQueryTextListener {
 
@@ -138,6 +141,46 @@ public class MainActivity extends SuperActivity implements SearchView.OnQueryTex
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
+        if (id == R.id.action_settings) {
+            return true;
+        }
+        if (id == R.id.A_Z){
+            item.setChecked(true);
+            Collections.sort(users, new Comparator<User>() {
+                @Override
+                public int compare(User o1, User o2) {
+                    return o1.name.compareToIgnoreCase(o2.name);
+                }
+            });
+        }
+        if (id == R.id.Z_A){
+            item.setChecked(true);
+            Collections.sort(users, new Comparator<User>() {
+                @Override
+                public int compare(User o1, User o2) {
+                    return o2.name.compareToIgnoreCase(o1.name);
+                }
+            });
+        }
+        if (id == R.id.Year){
+            item.setChecked(true);
+            Collections.sort(users, new Comparator<User>() {
+                @Override
+                public int compare(User o1, User o2) {
+                    return Integer.compare(o1.year,o2.year);
+                }
+            });
+        }
+        if (id == R.id.Class){
+            item.setChecked(true);
+            Collections.sort(users, new Comparator<User>() {
+                @Override
+                public int compare(User o1, User o2) {
+                    return o1.studies.compareToIgnoreCase(o2.studies);
+                }
+            });
+        }
+        updateList();
 
         return super.onOptionsItemSelected(item);
     }
