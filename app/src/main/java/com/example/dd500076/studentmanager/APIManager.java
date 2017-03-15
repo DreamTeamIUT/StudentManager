@@ -157,6 +157,7 @@ public class APIManager {
                     Log.d(TAG, "onReceive: pomme de terre ");
                     APIManager.this.requestMessageInterface.onAddStudent(true);
                 }else if (intent.getStringExtra("requestName").equals(RequestName.DEL)){
+                    Log.d(TAG, "onReceive: Delete datah");
                     APIManager.this.requestMessageInterface.onDeleteStudent(true);
                 }
             } catch (JSONException e) {

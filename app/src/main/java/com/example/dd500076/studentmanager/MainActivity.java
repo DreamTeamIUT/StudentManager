@@ -2,29 +2,36 @@ package com.example.dd500076.studentmanager;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.app.SearchManager;
+import android.app.SearchableInfo;
+import android.content.ComponentName;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import java.util.ArrayList;
 
-public class MainActivity extends SuperActivity {
+public class MainActivity extends SuperActivity implements SearchView.OnQueryTextListener {
 
     private static final String TAG = "MainActivity";
 
     private static final int REQUEST_ADD = 665;
 
     private ListView listView;
+    private ArrayList<User> users;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -112,6 +119,14 @@ public class MainActivity extends SuperActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
+
+
+        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+        SearchView searchView = (SearchView) menu.findItem(R.id.action_search).getActionView();
+
+        searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
+        searchView.setOnQueryTextListener(this);
+
         return true;
     }
 
@@ -123,9 +138,6 @@ public class MainActivity extends SuperActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
 
         return super.onOptionsItemSelected(item);
     }
@@ -149,8 +161,34 @@ public class MainActivity extends SuperActivity {
 
     @Override
     public void onStudentList(ArrayList<User> users) {
-        UsersAdapter adapter = new UsersAdapter(this, users);
-        ListView listView = (ListView) findViewById(R.id.listviewMain);
-        listView.setAdapter(adapter);
+        this.users = users;
+        this.listView.setAdapter(new UsersAdapter(this, this.users));
+    }
+
+    @Override
+    public boolean onQueryTextSubmit(String query) {
+        Log.d(TAG, "onQueryTextSubmit: " + query);
+        return false;
+    }
+
+    @Override
+    public boolean onQueryTextChange(String newText) {
+        Log.d(TAG, "onQueryTextChange: " + newText);
+
+        if (!newText.equals("")) {
+            ArrayList<User> tempUsers = new ArrayList<>();
+
+            for (User user : this.users) {
+                if (user.name.toLowerCase().contains(newText.toLowerCase()) || user.surname.toLowerCase().contains(newText.toLowerCase()))
+                    tempUsers.add(user);
+            }
+
+            this.listView.setAdapter(new UsersAdapter(this, tempUsers));
+        }
+        else
+            this.listView.setAdapter(new UsersAdapter(this, this.users));
+
+
+        return false;
     }
 }

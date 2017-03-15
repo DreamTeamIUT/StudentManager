@@ -1,15 +1,18 @@
 package com.example.dd500076.studentmanager;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Filter;
 import android.widget.TextView;
 
 import org.w3c.dom.Text;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 import static java.security.AccessController.getContext;
 
@@ -18,11 +21,13 @@ import static java.security.AccessController.getContext;
  */
 
 public class UsersAdapter extends ArrayAdapter<User> {
+    private ArrayList<User> users;
 
     public UsersAdapter(Context context, ArrayList<User> users) {
 
         super(context, 0, users);
 
+        setUsers(users);
     }
 
     @Override
@@ -55,6 +60,13 @@ public class UsersAdapter extends ArrayAdapter<User> {
         convertView.setTag(user);
 
         return convertView;
+    }
 
+    public ArrayList<User> getUsers() {
+        return users;
+    }
+
+    private void setUsers(ArrayList<User> users) {
+        this.users = users;
     }
 }
