@@ -10,6 +10,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.SubMenu;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -17,6 +18,8 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 public class MainActivity extends SuperActivity {
 
@@ -25,6 +28,7 @@ public class MainActivity extends SuperActivity {
     private static final int REQUEST_ADD = 665;
 
     private ListView listView;
+    private ArrayList <User> users;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -112,6 +116,7 @@ public class MainActivity extends SuperActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
+
         return true;
     }
 
@@ -126,6 +131,43 @@ public class MainActivity extends SuperActivity {
         if (id == R.id.action_settings) {
             return true;
         }
+        if (id == R.id.A_Z){
+            item.setChecked(true);
+            Collections.sort(users, new Comparator<User>() {
+                @Override
+                public int compare(User o1, User o2) {
+                    return o1.name.compareTo(o2.name);
+                }
+            });
+        }
+        if (id == R.id.Z_A){
+            item.setChecked(true);
+            Collections.sort(users, new Comparator<User>() {
+                @Override
+                public int compare(User o1, User o2) {
+                    return o2.name.compareTo(o1.name);
+                }
+            });
+        }
+        if (id == R.id.Year){
+            item.setChecked(true);
+            Collections.sort(users, new Comparator<User>() {
+                @Override
+                public int compare(User o1, User o2) {
+                    return Integer.compare(o1.year,o2.year);
+                }
+            });
+        }
+        if (id == R.id.Class){
+            item.setChecked(true);
+            Collections.sort(users, new Comparator<User>() {
+                @Override
+                public int compare(User o1, User o2) {
+                    return o1.studies.compareTo(o2.studies);
+                }
+            });
+        }
+        updateList();
 
         return super.onOptionsItemSelected(item);
     }
@@ -149,6 +191,10 @@ public class MainActivity extends SuperActivity {
 
     @Override
     public void onStudentList(ArrayList<User> users) {
+        this.users = users;
+        updateList();
+    }
+    public void updateList(){
         UsersAdapter adapter = new UsersAdapter(this, users);
         ListView listView = (ListView) findViewById(R.id.listviewMain);
         listView.setAdapter(adapter);

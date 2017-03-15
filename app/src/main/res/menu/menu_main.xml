@@ -3,8 +3,37 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.example.dd500076.studentmanager.MainActivity">
     <item
-        android:id="@+id/action_settings"
+        android:id="@+id/sort"
+        android:icon="@drawable/ic_unfold_more_black_24dp"
         android:orderInCategory="100"
+        android:title="Sort"
+        android:visible="true"
+        app:showAsAction="always">
+
+        <menu>
+            <group
+                android:id="@+id/group"
+                android:checkableBehavior="single">
+                <item
+                    android:id="@+id/A_Z"
+                    android:title="A to Z" />
+                <item
+                    android:id="@+id/Z_A"
+                    android:title="Z to A" />
+                <item
+                    android:id="@+id/Year"
+
+                    android:title="Year" />
+                <item
+                    android:id="@+id/Class"
+                    android:title="Class" />
+            </group>
+        </menu>
+
+    </item>
+    <item
+        android:id="@+id/action_settings"
+        android:orderInCategory="101"
         android:title="@string/action_settings"
         app:showAsAction="never" />
 </menu>
