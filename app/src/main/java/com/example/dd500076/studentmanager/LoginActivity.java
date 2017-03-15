@@ -1,5 +1,6 @@
 package com.example.dd500076.studentmanager;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -10,10 +11,14 @@ import android.widget.EditText;
 
 public class LoginActivity extends SuperActivity {
 
+    private String idEtud;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+        idEtud = getIntent().getStringExtra("idEtu");
 
         FloatingActionButton button = (FloatingActionButton) findViewById(R.id.fab);
         button.setOnClickListener(new View.OnClickListener() {
@@ -39,7 +44,9 @@ public class LoginActivity extends SuperActivity {
     @Override
     public void onConnect(boolean connected, String token) {
         if(connected){
-            setResult(RESULT_OK, null);
+            Intent i = new Intent();
+            i.putExtra("idEtu", idEtud);
+            setResult(RESULT_OK, i);
             finish();
         }
         else {

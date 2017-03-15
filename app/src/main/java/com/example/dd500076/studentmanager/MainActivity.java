@@ -26,6 +26,7 @@ public class MainActivity extends SuperActivity {
     private static final String TAG = "MainActivity";
 
     private static final int REQUEST_ADD = 665;
+    private static final int REQUEST_DEL = 884;
 
     private ListView listView;
     private ArrayList <User> users;
@@ -88,8 +89,14 @@ public class MainActivity extends SuperActivity {
                                     alert.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                                         @Override
                                         public void onClick(DialogInterface dialog, int which) {
-                                            Log.d(TAG, "onClick: del stud " + user.idEtu);
-                                            APIManager.getInstance(MainActivity.this).delStudent(user.idEtu);
+                                            if (APIManager.getInstance(MainActivity.this).isConnected()) {
+                                                Log.d(TAG, "onClick: del stud " + user.idEtu);
+                                                APIManager.getInstance(MainActivity.this).delStudent(user.idEtu);
+                                            }else{
+                                                Intent i = new Intent(MainActivity.this, LoginActivity.class);
+                                                i.putExtra("idEtu",user.idEtu);
+                                                MainActivity.this.startActivityForResult(i, REQUEST_DEL);
+                                            }
                                         }
                                     });
                                     alert.setNegativeButton("No", new DialogInterface.OnClickListener(){
@@ -176,6 +183,11 @@ public class MainActivity extends SuperActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == REQUEST_ADD && resultCode == RESULT_OK)
             APIManager.getInstance(this).getStudentList();
+        if(requestCode == REQUEST_DEL && resultCode == RESULT_OK){
+            APIManager.getInstance(this).delStudent(data.getStringExtra("idEtu"));
+            APIManager.getInstance(this).getStudentList();
+
+        }
     }
 
     @Override
