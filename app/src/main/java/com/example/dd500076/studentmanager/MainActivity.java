@@ -1,27 +1,22 @@
 package com.example.dd500076.studentmanager;
 
-import android.app.AlertDialog;
-import android.app.Dialog;
-import android.app.SearchManager;
-import android.app.SearchableInfo;
-import android.content.ComponentName;
-import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.SubMenu;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+
+import com.l4digital.fastscroll.FastScrollRecyclerView;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -34,8 +29,8 @@ public class MainActivity extends SuperActivity implements SearchView.OnQueryTex
     private static final int REQUEST_ADD = 665;
     private static final int REQUEST_DEL = 884;
 
-    private ListView listView;
-    private ArrayList<User> users;
+    private FastScrollRecyclerView fastScrollRecyclerView;
+    private ArrayList <User> users;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -68,6 +63,10 @@ public class MainActivity extends SuperActivity implements SearchView.OnQueryTex
         listView.setAdapter(adapter);
         */
 
+        fastScrollRecyclerView = (FastScrollRecyclerView) findViewById(R.id.recycler_view);
+        fastScrollRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+        /*
         listView = (ListView) findViewById(R.id.listviewMain);
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -121,6 +120,7 @@ public class MainActivity extends SuperActivity implements SearchView.OnQueryTex
                 alertDialog.show();
             }
         });
+        */
 
         APIManager.getInstance(this).getStudentList();
     }
@@ -218,7 +218,7 @@ public class MainActivity extends SuperActivity implements SearchView.OnQueryTex
     @Override
     public void onStudentList(ArrayList<User> users) {
         this.users = users;
-        this.listView.setAdapter(new UsersAdapter(this, this.users));
+        fastScrollRecyclerView.setAdapter(new UserRecyclerAdapter(this.users));
     }
 
     @Override
@@ -246,5 +246,4 @@ public class MainActivity extends SuperActivity implements SearchView.OnQueryTex
 
 
         return false;
-    }
 }

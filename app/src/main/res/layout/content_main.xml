@@ -9,9 +9,14 @@
     tools:context="com.example.dd500076.studentmanager.MainActivity"
     tools:showIn="@layout/activity_main">
 
-    <ListView
+    <com.l4digital.fastscroll.FastScrollRecyclerView
+        android:id="@+id/recycler_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_alignParentStart="true"
-        android:id="@+id/listviewMain" />
+        app:bubbleColor="#00bb00"
+        app:bubbleTextColor="#ffffff"
+        app:handleColor="#999999"
+        app:trackColor="#bbbbbb"
+        app:hideScrollbar="false"
+        app:showTrack="false" />
 </RelativeLayout>

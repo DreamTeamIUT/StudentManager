@@ -18,4 +18,9 @@ public class User {
         this.idEtu = idEtu;
         this.year = year;
     }
+
+    @Override
+    public String toString() {
+        return name;
+    }
 }
