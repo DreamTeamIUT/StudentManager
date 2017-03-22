@@ -19,6 +19,26 @@ public class User {
         this.year = year;
     }
 
+    public String getIdEtu() {
+        return idEtu;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getSurname() {
+        return surname;
+    }
+
+    public String getStudies() {
+        return studies;
+    }
+
+    public int getYear() {
+        return year;
+    }
+
     @Override
     public String toString() {
         return name;

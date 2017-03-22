@@ -26,11 +26,14 @@
         <activity
             android:name=".LoginActivity"
             android:label="@string/title_activity_login"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".AddUser" />
+            android:theme="@style/AppTheme.NoActionBar"
+            android:parentActivityName=".MainActivity" />
+        <activity android:name=".AddUser"
+            android:parentActivityName=".MainActivity" />
         <activity
             android:name=".StudentActivity"
             android:label="@string/title_activity_student"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar"
+            android:parentActivityName=".MainActivity"></activity>
     </application>
 </manifest>

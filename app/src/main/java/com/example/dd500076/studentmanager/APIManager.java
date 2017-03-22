@@ -88,8 +88,12 @@ public class APIManager {
         request(url, RequestName.ADD);
     }
     public void delStudent(String idUser) {
+        Log.d(TAG, "delStudent: " + idUser);
+
         String jeton = getToken();
         String url = "http://infort.gautero.fr/supp.php?jeton=" + jeton + "id=" + idUser;
+
+        request(url, RequestName.DEL);
     }
 
     private void request(final String urlText, final String requestName) {

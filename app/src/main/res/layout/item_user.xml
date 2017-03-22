@@ -12,10 +12,10 @@
         android:layout_height="match_parent">
 
         <TextView
-            android:id="@+id/tvSurname"
+            android:id="@+id/tvName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Pierre"
+            android:text="Boulanger"
             android:layout_above="@+id/tvStudies"
             android:layout_alignStart="@+id/tvIdEtu"
             android:layout_weight="0.76"
@@ -26,9 +26,9 @@
             android:layout_marginTop="2dp" />
 
         <TextView
-            android:id="@+id/tvName"
+            android:id="@+id/tvSurname"
             android:layout_width="wrap_content"
-            android:text="Boulanger"
+            android:text="Pierre"
             android:layout_alignParentTop="true"
             android:layout_alignParentStart="true"
             android:layout_weight="21.88"

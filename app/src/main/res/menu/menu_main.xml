@@ -22,7 +22,8 @@
                 android:checkableBehavior="single">
                 <item
                     android:id="@+id/A_Z"
-                    android:title="A to Z" />
+                    android:title="A to Z"
+                    android:checked="true" />
                 <item
                     android:id="@+id/Z_A"
                     android:title="Z to A" />

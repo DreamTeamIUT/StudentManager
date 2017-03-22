@@ -1,6 +1,9 @@
 package com.example.dd500076.studentmanager;
 
+import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +14,8 @@ import com.l4digital.fastscroll.FastScroller;
 import java.util.ArrayList;
 import java.util.List;
 
+import static android.content.ContentValues.TAG;
+
 /**
  * Created by dd500076 on 15/03/17.
  */
@@ -18,15 +23,19 @@ import java.util.List;
 public class UserRecyclerAdapter extends RecyclerView.Adapter<UserRecyclerAdapter.ViewHolder> implements FastScroller.SectionIndexer {
 
     private ArrayList<User> users;
+    private RecyclerView recyclerView;
 
-    public UserRecyclerAdapter(ArrayList<User> users) {
+    public UserRecyclerAdapter(ArrayList<User> users, RecyclerView recyclerView) {
         this.users = users;
+        this.recyclerView = recyclerView;
     }
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        LayoutInflater inflater = LayoutInflater.from(parent.getContext());
-        return new ViewHolder(inflater.inflate(R.layout.item_user, parent, false));
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_user, parent, false);
+        view.setOnClickListener(onClickListener);
+
+        return new ViewHolder(view);
     }
 
     @Override
@@ -43,6 +52,24 @@ public class UserRecyclerAdapter extends RecyclerView.Adapter<UserRecyclerAdapte
     public String getSectionText(int position) {
         return String.valueOf(String.valueOf(users.get(position)).charAt(0));
     }
+
+    private View.OnClickListener onClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            int itemPosition = recyclerView.getChildLayoutPosition(v);
+
+            User user = users.get(itemPosition);
+
+            Intent intent = new Intent(recyclerView.getContext(), StudentActivity.class);
+            intent.putExtra("studentId", user.getIdEtu());
+            intent.putExtra("studentName", user.getName());
+            intent.putExtra("studentSurname", user.getSurname());
+            intent.putExtra("studentStudies", user.getStudies());
+            intent.putExtra("studentYear", user.getYear());
+
+            recyclerView.getContext().startActivity(intent);
+        }
+    };
 
     static class ViewHolder extends RecyclerView.ViewHolder {
 
