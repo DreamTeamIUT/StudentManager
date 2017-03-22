@@ -46,143 +46,18 @@ public class MainActivity extends SuperActivity implements SearchView.OnQueryTex
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        firstStart = true;
+        this.firstStart = true;
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
+        this.fastScrollRecyclerView = (FastScrollRecyclerView) findViewById(R.id.recycler_view);
+        this.fastScrollRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+        findViewById(R.id.fab).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent i = new Intent(MainActivity.this, AddUser.class);
                 startActivityForResult(i, REQUEST_ADD);
             }
         });
-
-        /*
-        ArrayList<User> arrayOfUsers = new ArrayList<User>();
-
-        User user1 = new User("500098", "nicolas", "romain", "R&T", 2016);
-        User user2 = new User("500064", "villena", "guillaume", "R&T", 2016);
-        User user3 = new User("500076", "delaporte", "dylan", "R&T", 2016);
-        User user4 = new User("503084", "fedhaoui", "thibault", "R&T", 2016);
-        arrayOfUsers.add(user1);
-        arrayOfUsers.add(user2);
-        arrayOfUsers.add(user3);
-        UsersAdapter adapter = new UsersAdapter(this, arrayOfUsers);
-        ListView listView = (ListView) findViewById(R.id.listviewMain);
-        listView.setAdapter(adapter);
-        */
-
-        this.fastScrollRecyclerView = (FastScrollRecyclerView) findViewById(R.id.recycler_view);
-        this.fastScrollRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        /*
-        this.fastScrollRecyclerView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Log.d(TAG, "onItemClick: test");
-
-                final User user = (User) view.getTag();
-
-                Log.d(TAG, "onItemClick: " + user.name);
-
-                AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-                builder.setTitle(R.string.properties_student_text)
-                        .setItems(R.array.properties_student, new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int which) {
-                                Log.d(TAG, "onClick : " + which);
-                                if (which == 0){
-                                    //modifier
-                                }
-                                else {
-                                    //supprimer
-                                    AlertDialog.Builder alert = new AlertDialog.Builder(MainActivity.this);
-                                    alert.setTitle("Warning");
-                                    alert.setMessage("Would you like to delete " + user.name);
-                                    alert.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                                        @Override
-                                        public void onClick(DialogInterface dialog, int which) {
-                                            if (APIManager.getInstance(MainActivity.this).isConnected()) {
-                                                Log.d(TAG, "onClick: del stud " + user.idEtu);
-                                                APIManager.getInstance(MainActivity.this).delStudent(user.idEtu);
-                                            }else{
-                                                Intent i = new Intent(MainActivity.this, LoginActivity.class);
-                                                i.putExtra("idEtu",user.idEtu);
-                                                MainActivity.this.startActivityForResult(i, REQUEST_DEL);
-                                            }
-                                        }
-                                    });
-                                    alert.setNegativeButton("No", new DialogInterface.OnClickListener(){
-                                        @Override
-                                        public void onClick(DialogInterface dialog, int which) {
-                                            dialog.cancel();
-                                        }
-                                    });
-                                    alert.show();
-                                }
-
-                            }
-                        });
-
-                AlertDialog alertDialog = builder.create();
-                alertDialog.show();
-            }
-        });
-        */
-
-        /*
-        listView = (ListView) findViewById(R.id.listviewMain);
-
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Log.d(TAG, "onItemClick: test");
-
-                final User user = (User) view.getTag();
-
-                Log.d(TAG, "onItemClick: " + user.name);
-
-                AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-                builder.setTitle(R.string.properties_student_text)
-                        .setItems(R.array.properties_student, new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int which) {
-                                Log.d(TAG, "onClick : " + which);
-                                if (which == 0){
-                                    //modifier
-                                }
-                                else {
-                                    //supprimer
-                                    AlertDialog.Builder alert = new AlertDialog.Builder(MainActivity.this);
-                                    alert.setTitle("Warning");
-                                    alert.setMessage("Would you like to delete " + user.name);
-                                    alert.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                                        @Override
-                                        public void onClick(DialogInterface dialog, int which) {
-                                            if (APIManager.getInstance(MainActivity.this).isConnected()) {
-                                                Log.d(TAG, "onClick: del stud " + user.idEtu);
-                                                APIManager.getInstance(MainActivity.this).delStudent(user.idEtu);
-                                            }else{
-                                                Intent i = new Intent(MainActivity.this, LoginActivity.class);
-                                                i.putExtra("idEtu",user.idEtu);
-                                                MainActivity.this.startActivityForResult(i, REQUEST_DEL);
-                                            }
-                                        }
-                                    });
-                                    alert.setNegativeButton("No", new DialogInterface.OnClickListener(){
-                                        @Override
-                                        public void onClick(DialogInterface dialog, int which) {
-                                            dialog.cancel();
-                                        }
-                                    });
-                                    alert.show();
-                                }
-
-                            }
-                        });
-
-                AlertDialog alertDialog = builder.create();
-                alertDialog.show();
-            }
-        });
-        */
     }
 
     @Override
@@ -190,6 +65,7 @@ public class MainActivity extends SuperActivity implements SearchView.OnQueryTex
         super.onResume();
 
         APIManager.getInstance(this).getStudentList();
+        sortAtoZ();
     }
 
     @Override
@@ -288,12 +164,7 @@ public class MainActivity extends SuperActivity implements SearchView.OnQueryTex
         if (firstStart) {
             firstStart = false;
 
-            Collections.sort(users, new Comparator<User>() {
-                @Override
-                public int compare(User o1, User o2) {
-                    return o1.name.compareToIgnoreCase(o2.name);
-                }
-            });
+            sortAtoZ();
         }
     }
 
@@ -321,6 +192,15 @@ public class MainActivity extends SuperActivity implements SearchView.OnQueryTex
 
 
         return false;
+    }
+
+    private void sortAtoZ() {
+        Collections.sort(users, new Comparator<User>() {
+            @Override
+            public int compare(User o1, User o2) {
+                return o1.name.compareToIgnoreCase(o2.name);
+            }
+        });
     }
 
     private void setAdapterRecyclerView(ArrayList<User> users) {

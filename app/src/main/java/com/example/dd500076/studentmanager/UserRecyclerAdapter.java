@@ -88,7 +88,7 @@ public class UserRecyclerAdapter extends RecyclerView.Adapter<UserRecyclerAdapte
         }
 
         public void bind(User user) {
-            tvName.setText(user.name);
+            tvName.setText((user.name.length() > 12) ? (user.name.substring(0, 9) + "...") : user.name);
             tvSurname.setText(user.surname);
             tvYear.setText(String.valueOf(user.year));
             tvStudies.setText(user.studies);
